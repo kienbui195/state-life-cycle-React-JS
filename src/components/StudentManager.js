@@ -41,7 +41,7 @@ const StudentManager = (props) => {
   ]);
 
   let [temp, setTemp] = useState({
-    index: `${users.length + 1}`,
+    index: `${users.length}`,
     name: "",
     phone: "",
     email: "",
@@ -89,7 +89,7 @@ const StudentManager = (props) => {
     };
     setTemp(user);
     setStatus({ ...status, main: "none", update: "block" });
-    setTimeout(()=>setStatus({...status, updateSuccess: 'none'}), 2500)
+    
   };
 
   const update = (index) => {
@@ -101,7 +101,7 @@ const StudentManager = (props) => {
       main: "block",
       updateSuccess: "block",
     });
-    
+    setTimeout(()=>setStatus({...status, updateSuccess: 'none'}), 2500)
   };
 
   return (
@@ -197,21 +197,21 @@ const StudentManager = (props) => {
                 id="standard-basic"
                 label="Name"
                 variant="standard"
-                value={temp.name}
+                
                 onChange={(e) => setTemp({ ...temp, name: e.target.value })}
               />
               <TextField
                 id="standard-basic"
                 label="Phone"
                 variant="standard"
-                value={temp.phone}
+                
                 onChange={(e) => setTemp({ ...temp, phone: e.target.value })}
               />
               <TextField
                 id="standard-basic"
                 label="Email"
                 variant="standard"
-                value={temp.email}
+                
                 onChange={(e) => setTemp({ ...temp, email: e.target.value })}
               />
               <br />
