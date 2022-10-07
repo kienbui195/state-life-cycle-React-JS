@@ -12,6 +12,7 @@ import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -39,7 +40,6 @@ const StudentManager = (props) => {
       email: "user@gmail.com",
     },
   ]);
-
   let [temp, setTemp] = useState({
     index: `${users.length}`,
     name: "",
@@ -69,7 +69,7 @@ const StudentManager = (props) => {
       email: "",
     });
     setStatus({ ...status, add: "none", addSuccess: "block" });
-    setTimeout(() => setStatus({ ...status, addSuccess: "none" }), 2000);
+    setTimeout(() => setStatus({ ...status, addSuccess: "none" , add: 'none'}), 2000);
   };
 
   const deleteItem = (index) => {
@@ -90,18 +90,25 @@ const StudentManager = (props) => {
     setTemp(user);
     setStatus({ ...status, main: "none", update: "block" });
     
-  };
+  }; 
 
   const update = (index) => {
     users.splice(index, 1, temp);
     setUsers([...users]);
+    setTemp({
+      index: '',
+      name: '',
+      phone: '',
+      email: ''
+    });
     setStatus({
       ...status,
-      update: "none",
-      main: "block",
       updateSuccess: "block",
+      main: 'block',
+      update: 'none'
     });
-    setTimeout(()=>setStatus({...status, updateSuccess: 'none'}), 2500)
+  
+    setTimeout(() => setStatus({ ...status, updateSuccess: 'none', update: "none", main: "block" }), 2500);
   };
 
   return (
@@ -165,7 +172,7 @@ const StudentManager = (props) => {
           className="alert alert-success"
           style={{ display: status.addSuccess }}
         >
-          <strong>Add Success!</strong>
+          <strong>CREATE Success!</strong>
         </div>
         <div
           className="alert alert-success"
@@ -184,12 +191,13 @@ const StudentManager = (props) => {
             Add
           </Button>
         </div>
-        <div>
+        <div >
           <Modal
             open={open}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
+            
           >
             <Box sx={style}>
               <h3>Add User</h3>
@@ -197,21 +205,21 @@ const StudentManager = (props) => {
                 id="standard-basic"
                 label="Name"
                 variant="standard"
-                
+                value={temp.name}
                 onChange={(e) => setTemp({ ...temp, name: e.target.value })}
               />
               <TextField
                 id="standard-basic"
                 label="Phone"
                 variant="standard"
-                
+                value={temp.phone}
                 onChange={(e) => setTemp({ ...temp, phone: e.target.value })}
               />
               <TextField
                 id="standard-basic"
                 label="Email"
                 variant="standard"
-                
+                value={temp.email}
                 onChange={(e) => setTemp({ ...temp, email: e.target.value })}
               />
               <br />
@@ -220,6 +228,7 @@ const StudentManager = (props) => {
                 variant="outlined"
                 className="mt-2"
                 style={{ width: "100%", textAlign: "center" }}
+                disabled={(!temp.name || !temp.phone || !temp.email)}
               >
                 Add
               </Button>
